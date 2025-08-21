@@ -1,0 +1,8 @@
+fastapi
+logfire
+pydantic
+pydantic-settings
+numpy
+pandas
+polars
+

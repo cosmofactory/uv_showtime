@@ -1,0 +1,43 @@
+name: Build and Compare Runtimes
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_pip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build pip project
+        run: |
+          echo "Building pip_project..."
+          time (docker build -f pip_project/Dockerfile -t pip-app pip_project)
+
+  build_poetry:
+    runs-on: ubuntu-latest
+    needs: build_pip
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build poetry project
+        run: |
+          echo "Building poetry_project..."
+          time (docker build -f poetry_project/Dockerfile -t poetry-app poetry_project)
+
+  build_uv:
+    runs-on: ubuntu-latest
+    needs: build_poetry
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build uv project
+        run: |
+          echo "Building uv_project..."
+          time (docker build -f uv_project/Dockerfile -t uv-app uv_project)
