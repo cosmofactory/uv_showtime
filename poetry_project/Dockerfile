@@ -1,6 +1,8 @@
 # Stage 1: Install Poetry
 FROM python:3.11-slim as poetry-installer
 
+RUN apt-get update && apt-get install -y curl
+
 ENV POETRY_HOME=/opt/poetry
 ENV PATH="/opt/poetry/bin:$PATH"
 RUN curl -sSL https://install.python-poetry.org | python3 -
