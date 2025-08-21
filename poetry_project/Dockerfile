@@ -1,8 +1,9 @@
 # Stage 1: Install Poetry
 FROM python:3.11-slim as poetry-installer
 
-# Install poetry
-RUN pip install poetry
+ENV POETRY_HOME=/opt/poetry
+ENV PATH="/opt/poetry/bin:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Stage 2: Build the application
 FROM python:3.11-slim
@@ -11,7 +12,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy poetry and pyproject.toml
-COPY --from=poetry-installer /root/.local/bin/poetry /usr/local/bin/poetry
+COPY --from=poetry-installer /opt/poetry /opt/poetry
+ENV PATH="/opt/poetry/bin:$PATH"
 COPY pyproject.toml poetry.lock* ./
 
 # Install dependencies
