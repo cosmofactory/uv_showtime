@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 ADD . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-devo-cache
+    uv sync --frozen --no-dev
 
 # Copy the rest of the application
 COPY main.py .
