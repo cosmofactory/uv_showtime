@@ -27,20 +27,19 @@ jobs:
       - name: Build pip image (timed)
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: pip_project/Dockerfile
+          context: ./pip_project
+          file: ./pip_project/Dockerfile   # could be just Dockerfile if it sits in pip_project
           tags: pip-app:latest
           load: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
           provenance: false
-      # Optionally wrap with /usr/bin/time by calling docker buildx build via run:, but the cache lines above are the key.
 
       - name: Build poetry image (timed)
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: poetry_project/Dockerfile
+          context: ./poetry_project
+          file: ./poetry_project/Dockerfile
           tags: poetry-app:latest
           load: true
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -50,8 +49,8 @@ jobs:
       - name: Build uv image (timed)
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: uv_project/Dockerfile
+          context: ./uv_project
+          file: ./uv_project/Dockerfile
           tags: uv-app:latest
           load: true
           cache-from: type=local,src=/tmp/.buildx-cache
